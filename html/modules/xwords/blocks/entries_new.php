@@ -43,19 +43,20 @@ if( ! function_exists( 'xwords_b_entries_new_show_base' ) )
 //		$words = $xoopsDB -> query( "SELECT * FROM $ent_table WHERE datesub < '".time()."' AND datesub > '0' AND submit = '0' AND offline = '0' AND request = '0'" );
 //		$totalwords = $xoopsDB -> getRowsNum( $words );
 
-		$sql = "SELECT entryID, categoryID, term, datesub FROM $ent_table WHERE datesub < '".time()."' AND datesub > '0' AND submit = '0' AND offline = '0' AND request = '0' ORDER BY " . $options[0] . " DESC";
+		$sql = "SELECT entryID, categoryID, term, datesub, definition FROM $ent_table WHERE datesub < '".time()."' AND datesub > '0' AND submit = '0' AND offline = '0' AND request = '0' ORDER BY " . $options[0] . " DESC";	//okino
 		$result = $xoopsDB->query ($sql, $options[1], 0);
 		$totalwords = $xoopsDB -> getRowsNum( $result );
 
 		if ( $totalwords > 0 ) // If there are definitions
 			{
-			while (list( $entryID, $categoryID, $term, $datesub ) = $xoopsDB->fetchRow($result))
+			while (list( $entryID, $categoryID, $term, $datesub, $definition) = $xoopsDB->fetchRow($result))
 				{
 				$newentries['dir'] = $xwModule->dirname();
 				$newentries['linktext'] = $myts -> makeTboxData4Show($term);
 				$newentries['id'] = intval($entryID);
 				$newentries['categoryID'] = intval($xwConfig['multicats']) ? intval($categoryID) : 0;
 				$newentries['date'] = formatTimestamp( $datesub, "s" );
+				$newentries['summary'] = xoops_substr( $definition , 0 , 255 ); //okino
 
 				$block['newstuff'][] = $newentries;
 				}

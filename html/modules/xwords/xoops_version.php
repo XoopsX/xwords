@@ -16,7 +16,7 @@ $mydirname = basename( dirname( __FILE__ ) ) ;
 $MYDIRNAME = strtoupper($mydirname);
 
 $modversion['name'] = $MYDIRNAME;
-$modversion['version'] = 0.46;
+$modversion['version'] = 0.47;
 $modversion['description'] = constant("_MI_{$MYDIRNAME}_MD_DESC");
 $modversion['author'] = "Aiba<br />(http://www.kanpyo.net/)";
 $modversion['credits'] = "Original: Catzwolf<br />XOOPS Project";
@@ -127,6 +127,12 @@ $modversion['blocks'][4]['name'] = $MYDIRNAME.constant("_MI_{$MYDIRNAME}_TERMINI
 $modversion['blocks'][4]['description'] = "Shows a letter";
 $modversion['blocks'][4]['show_func'] = "{$mydirname}_b_entries_initial_show";
 $modversion['blocks'][4]['template'] = ($mydirname == "xwords") ? "entries_initial.html" : "{$mydirname}_initial.html";
+
+$modversion['blocks'][5]['file'] = "term_d3com.php";
+$modversion['blocks'][5]['name'] = $MYDIRNAME.constant("_MI_{$MYDIRNAME}_COMBLOCK");
+$modversion['blocks'][5]['description'] = "Shows a d3comments";
+$modversion['blocks'][5]['show_func'] = "{$mydirname}_b_d3comment_show";
+$modversion['blocks'][5]['template'] = ($mydirname == "xwords") ? "d3comment.html" : "{$mydirname}_d3comment.html";
 
 // Templates
 $modversion['templates'][1]['file'] = "{$mydirname}_category.html";
@@ -384,6 +390,50 @@ $modversion['config'][$cf]['formtype'] = 'select';
 $modversion['config'][$cf]['valuetype'] = 'int';
 $modversion['config'][$cf]['default'] = 5;
 $modversion['config'][$cf]['options'] = array( '0' => 0,'5' => 5, '10' => 10, '15' => 15, '20' => 20, '25' => 25, '30' => 30, '50' => 50 );
+
+$cf++;
+$modversion['config'][$cf]['name'] = 'comment_dirname';
+$modversion['config'][$cf]['title'] = "_MI_{$MYDIRNAME}_COM_DIRNAME";
+$modversion['config'][$cf]['description'] = "_MI_{$MYDIRNAME}_COM_DIRNAMEDSC";
+$modversion['config'][$cf]['formtype'] = 'textbox';
+$modversion['config'][$cf]['valuetype'] = 'text';
+$modversion['config'][$cf]['default'] = '';
+
+$cf++;
+$modversion['config'][$cf]['name'] = 'comment_forum_id';
+$modversion['config'][$cf]['title'] = "_MI_{$MYDIRNAME}_COM_FORUM_ID";
+$modversion['config'][$cf]['description'] = "_MI_{$MYDIRNAME}_COM_FORUM_IDDSC";
+$modversion['config'][$cf]['formtype'] = 'textbox';
+$modversion['config'][$cf]['valuetype'] = 'int';
+$modversion['config'][$cf]['default'] = 0;
+
+$cf++;
+$modversion['config'][$cf]['name'] = 'comment_order';
+$modversion['config'][$cf]['title'] =  "_MI_{$MYDIRNAME}_COM_ORDER";
+$modversion['config'][$cf]['description'] =  "_MI_{$MYDIRNAME}_COM_ORDERDSC";
+$modversion['config'][$cf]['formtype'] =  'select';
+$modversion['config'][$cf]['valuetype'] =  'text';
+$modversion['config'][$cf]['default'] =  'desc';
+$modversion['config'][$cf]['options'] =  array( '_OLDESTFIRST' => 'asc' , '_NEWESTFIRST' => 'desc' );
+
+$cf++;
+$modversion['config'][$cf]['name'] =  'comment_view';
+$modversion['config'][$cf]['title'] =  "_MI_{$MYDIRNAME}_COM_VIEW";
+$modversion['config'][$cf]['description'] =  "_MI_{$MYDIRNAME}_COM_VIEWDSC";
+$modversion['config'][$cf]['formtype'] =  'select';
+$modversion['config'][$cf]['valuetype'] =  'text';
+$modversion['config'][$cf]['default'] =  'listposts_flat';
+$modversion['config'][$cf]['options'] =  array( '_FLAT' => 'listposts_flat' , '_THREADED' => 'listtopics' );
+
+$cf++;
+$modversion['config'][$cf]['name'] =  'comment_posts_num';
+$modversion['config'][$cf]['title'] =  "_MI_{$MYDIRNAME}_COM_POSTSNUM";
+$modversion['config'][$cf]['description'] =  '';
+$modversion['config'][$cf]['formtype'] =  'textbox';
+$modversion['config'][$cf]['valuetype'] =  'int';
+$modversion['config'][$cf]['default'] =  '10';
+$modversion['config'][$cf]['options'] =  array();
+
 
 // On Install
 if( ! empty( $_POST['fct'] ) && ! empty( $_POST['op'] ) && $_POST['fct'] == 'modulesadmin' && $_POST['op'] == 'install_ok' && $_POST['module'] != 'xwords' && $_POST['module'] == $mydirname && file_exists( XOOPS_ROOT_PATH . "/modules/{$mydirname}/include/oninstall.inc.php" ) )

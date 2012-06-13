@@ -102,8 +102,11 @@
   &nbsp;based&nbsp;on&nbsp;<a href="http://dev.xoops.org/modules/xfmod/project/showfiles.php?group_id=1019" title="Official XOOPS Development Site"><strong>Wordbook</strong></a>
 </div>
 
-<{* comment nav block *}>
-<{if $commentsnav}>
+<{if $moduleConfig.comment_dirname}>
+  <{d3comment mydirname='xwords' id=$thisterm.id subject=$thisterm.term class="xwordsD3commentContent}>
+<{else}>
+ <{* comment nav block *}>
+ <{if $commentsnav}>
   <div style="clear:both;margin:0.1em 0em;padding:0em;">
     <fieldset class="item" style="border:1px solid #778;margin:1em 0em;background-color:transparent;">
       <legend class="itemHead"><{$lang_comment}></legend>
@@ -122,6 +125,7 @@
       </div>
     </fieldset>
   </div>
+ <{/if}>
 <{/if}>
 
 <{* amazon tag *}>

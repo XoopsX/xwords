@@ -142,21 +142,21 @@ function getInitial($term = '',$proc = '')
 	$proc = stripslashes($proc);
 	$init_t = $init_p = '';
 
-	if (ereg('^[[:graph:]]',$term) && $term)
+	if (preg_match('/^[[:graph:]]/',$term) && $term)
 		{
 		$init_t = substr($term, 0, 1);
 		}
-	elseif (!ereg('^[[:blank:]]|[[:cntrl:]]',$term) && $term)
+	elseif (!preg_match('/^[[:blank:]]|[[:cntrl:]]/',$term) && $term)
 		{
 		$init_t = substr($term, 0, 2);
 		}
 	$init_t = $xwConfig['letterformat'] == "letter_format11.php" ? "":$init_t;
 
-	if (ereg('^[[:graph:]]',$proc) && $proc)
+	if (preg_match('/^[[:graph:]]/',$proc) && $proc)
 		{
 		$init_p = substr($proc, 0, 1);
 		}
-	elseif (!ereg('^[[:blank:]]|[[:cntrl:]]',$proc) && $proc)
+	elseif (!preg_match('/^[[:blank:]]|[[:cntrl:]]/',$proc) && $proc)
 		{
 		$init_p = substr($proc, 0, 2);
 		}
@@ -223,7 +223,8 @@ function alphaArray ($categoryID=0)
 		$data[$temp['init']] = $temp['COUNT(*)'];
 		for ($n=0; $n < count($mb_id); $n++)
 			{
-			if (ereg($mb_init[$n],$temp['init']))
+			//if (ereg($mb_init[$n],$temp['init']))
+			if (preg_match('/'.$mb_init[$n].'/', $temp['init']))
 				{
 				$data[$mb_linktext[$n]] = $temp['COUNT(*)'] + $data[$mb_linktext[$n]];
 				}

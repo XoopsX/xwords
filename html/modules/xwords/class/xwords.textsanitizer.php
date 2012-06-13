@@ -46,7 +46,7 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 		*/
 		function XwordsTextSanitizer()
 			{
-
+   			parent::MyTextSanitizer();
 			}
 
 		/**
@@ -80,22 +80,24 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 		 * @param   string  $id
 		 * @return  string
 		 **/
-		function displayTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1, $mod_dir = "", $id = 0 )
+		function &displayTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1, $mod_dir = "", $id = 0 )
 			{
 			if ($mod_dir)
 				{
-				$text = $this->getAutoLinkTerms($text,$html,$mod_dir,$id);
+            			$text = $this->prepareXcode( $text ); //okino
+            			$text = $this->postCodeDecode( parent::displayTarea( $text, $html, $smiley, 1, $image, $br ), $image ); //okino
+			//okino	$text = $this->getAutoLinkTerms($text,$html,$mod_dir,$id);
 				$html = 1;
 				}
 
 			if ($xcode)
 				{
-				$text = $this->postCodeDecode( $text , $image ) ;
+            			$text = $this->prepareXcode( $text ); //okino
+            			$text = $this->postCodeDecode( parent::displayTarea( $text, $html, $smiley, 1, $image, $br ), $image ); //okino
 				}
-			$text = parent::displayTarea( $text , $html , $smiley , $xcode , $image , $br ) ;
+			//okino	$text = parent::displayTarea( $text , $html , $smiley , $xcode , $image , $br ) ;
 			return $text;
 			}
-
 
 		/**
 		 * Filters textarea form data submitted for preview
@@ -110,21 +112,60 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 		 **/
 		function previewTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1, $mod_dir = "", $id = 0 )
 			{
-			$text = parent::stripSlashesGPC( $text );
 			if ($mod_dir)
 				{
-				$text = $this->getAutoLinkTerms($text,$html,$mod_dir,$id);
+            			$text = $this->prepareXcode( $text ); //okino
+            			$text = $this->postCodeDecode( parent::displayTarea( $text, $html, $smiley, 1, $image, $br ), $image ); //okino
+			//okino	$text = $this->getAutoLinkTerms($text,$html,$mod_dir,$id);
 				$html = 1;
 				}
 
 			if ($xcode)
 				{
-				$text = $this->postCodeDecode( $text , $image ) ;
+            			$text = $this->prepareXcode( $text ); //okino
+            			$text = $this->postCodeDecode( parent::displayTarea( $text, $html, $smiley, 1, $image, $br ), $image ); //okino
 				}
-
-			$text = parent::displayTarea( $text, $html, $smiley, $xcode, $image, $br ) ;
+			//okino	$text = parent::displayTarea( $text , $html , $smiley , $xcode , $image , $br ) ;
 			return $text;
 			}
+
+//okino added from
+    function prepareXcode( $text )
+    {
+        $patterns = array(
+            '#\n?\[code\]\r?\n?#' ,
+            '#\n?\[\/code\]\r?\n?#' ,
+            '#\n?\[quote\]\r?\n?#' ,
+            '#\n?\[\/quote\]\r?\n?#' ,
+        ) ;
+        $replacements = array(
+            '[code]' ,
+            '[/code]' ,
+            '[quote]' ,
+            '[/quote]' ,
+        ) ;
+        return preg_replace( $patterns, $replacements, $text );
+    }
+
+    function postCodeDecode( $text, $image )
+    {
+        $patterns = array();
+        $replacements = array();
+
+        // [siteimg]
+        $patterns[] = "/\[siteimg align=(['\"]?)(left|center|right)\\1]([^\"\(\)\?\&'<>]*)\[\/siteimg\]/sU";
+        $patterns[] = "/\[siteimg]([^\"\(\)\?\&'<>]*)\[\/siteimg\]/sU";
+        if( $image ) {
+            $replacements[] = '<img src="'.XOOPS_URL.'/\\3" align="\\2" alt="" />';
+
+            $replacements[] = '<img src="'.XOOPS_URL.'/\\1" alt="" />';
+        } else {
+            $replacements[] = '<a href"'.XOOPS_URL.'/\\3" target="_blank">'.XOOPS_URL.'/\\3</a>';
+            $replacements[] = '<a href"'.XOOPS_URL.'/\\1" target="_blank">'.XOOPS_URL.'/\\1</a>';
+        }
+        return preg_replace($patterns, $replacements, $text);
+    }
+//okino added to
 
 		/**
 		 *
@@ -233,7 +274,8 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 								}
 							if ($this->getModuleConfig("linktermsposition"))
 								{
-								$replace_term = '<a href="'.XOOPS_URL.'/modules/'.$glossaryterms[$i]['mod'].'/'.$md['link'].'"><img src="'.$image_url.'" width="21" height="21" alt="'.parent::makeTboxData4Show($this->getModuleConfig("linktermstitle")).$glossaryterms[$i]['name'].'" /></a>$1$2$3';
+//								$replace_term = '<a href="'.XOOPS_URL.'/modules/'.$glossaryterms[$i]['mod'].'/'.$md['link'].'"><img src="'.$image_url.'" width="21" height="21" alt="'.parent::makeTboxData4Show($this->getModuleConfig("linktermstitle")).$glossaryterms[$i]['name'].'" /></a>$1$2$3';
+								$replace_term = '<a href="'.XOOPS_URL.'/modules/'.$glossaryterms[$i]['mod'].'/'.$md['link'].'"><img src="'.$image_url.'" width="21" height="21" alt="'.parent::makeTboxData4Show($this->getModuleConfig("linktermstitle")).$glossaryterms[$i]['name'].'" />$2</a>';
 								$parts[$key] = preg_replace($search_term, $replace_term, $parts[$key]);
 								}
 							}
@@ -474,43 +516,6 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 			return $xwConfig["$confname"];
 			}
 
-
-		/**
-		 * Replace some appendix codes with their equivalent HTML formatting
-		 *
-		 * @param   string  $text
-		 * @return  string
-		 **/
-		function postCodeDecode( $text, $image )
-			{
-			$removal_tags = array( '[summary]' , '[/summary]' , '[pagebreak]' ) ;
-			$text = str_replace( $removal_tags , '' , $text ) ;
-
-			$patterns = array();
-			$replacements = array();
-
-			if( $this->getModuleConfig("amazon_id") )
-				{
-				$patterns[] = "/\[zon](.*)\[\/zon\]/sU";
-				$replacements[] = "<iframe src='http://rcm-jp.amazon.co.jp/e/cm?t=".parent::makeTboxData4Show($this->getModuleConfig("amazon_id"))."&o=9&p=8&l=as1&asins=\\1&=1&fc1=000000&IS2=1&&#108;&#116;1=_blank&lc1=0000ff&bc1=000000&bg1=ffffff&f=ifr' style='width:120px;height:240px;' scrolling='no' marginwidth='0' marginheight='0' frameborder='0'></iframe>\n";
-				}
-
-			$patterns[] = "/\[siteimg align=(['\"]?)(left|center|right)\\1]([^\"\(\)\?\&'<>]*)\[\/siteimg\]/sU";
-			$patterns[] = "/\[siteimg]([^\"\(\)\?\&'<>]*)\[\/siteimg\]/sU";
-			if( $image )
-				{
-				$replacements[] = '<img src="'.XOOPS_URL.'/\\3" align="\\2" alt="" />';
-
-				$replacements[] = '<img src="'.XOOPS_URL.'/\\1" alt="" />';
-				}
-			else
-				{
-				$replacements[] = '<a href"'.XOOPS_URL.'/\\3" target="_blank">'.XOOPS_URL.'/\\3</a>';
-				$replacements[] = '<a href"'.XOOPS_URL.'/\\1" target="_blank">'.XOOPS_URL.'/\\1</a>';
-				}
-
-			return preg_replace($patterns, $replacements, $text);
-			}
 
 		// The End of Class
 		}

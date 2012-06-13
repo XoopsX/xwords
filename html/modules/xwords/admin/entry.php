@@ -127,7 +127,7 @@ function entryEdit( $entryID = '' )
 		$mytree = new XoopsTree( $cat_table, "categoryID" , "0" );
 
 		ob_start();
-		$sform -> addElement( new XoopsFormHidden( 'categoryID', intval($categoryID) ) );
+//okino		$sform -> addElement( new XoopsFormHidden( 'categoryID', intval($categoryID) ) );
 		$mytree -> makeMySelBox( "name", "weight", $categoryID );
 		$sform -> addElement( new XoopsFormLabel( constant("_AM_{$MYDIRNAME}_CATNAME"), ob_get_contents() ) );
 		ob_end_clean();
@@ -327,7 +327,7 @@ function entrySave ($entryID = '')
 		$uid = $xoopsUser -> uid();
 		if ( $xoopsDB -> query( "INSERT INTO $ent_table (entryID, categoryID, term, proc, init, definition, ref, url, uid, submit, datesub, html, smiley, xcodes, breaks, block, offline, notifypub, request ) VALUES ('', '$categoryID', '$term', '$proc', '$init', '$definition', '$ref', '$url', '$uid', '$submit', '$date', '$html', '$smiley', '$xcodes', '$breaks', '$block', '$offline', '$notifypub', '$request' )" ) )
 			{
-			//posts count up
+		//posts count up
 			$xoopsDB->query( "UPDATE ".$xoopsDB->prefix('users')." SET posts=posts+1 WHERE uid='$uid'" ) ;
 			calculateTotals();
 			redirect_header( "index.php", 1, constant("_AM_{$MYDIRNAME}_ENTRYCREATEDOK") );

@@ -76,7 +76,8 @@ if( ! function_exists( 'xwords_b_entries_initial_show_base' ) )
 			$data[$temp['init']] = $temp['COUNT(*)'];
 			for ($n=0; $n < count($mb_id); $n++)
 				{
-				if (ereg($mb_init[$n],$temp['init']))
+				//if (ereg($mb_init[$n], $temp['init']))
+				if (preg_match('/'.$mb_init[$n].'/', $temp['init']))
 					{
 					$data[$mb_linktext[$n]] = $temp['COUNT(*)'] + $data[$mb_linktext[$n]];
 					}

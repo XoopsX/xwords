@@ -11,7 +11,7 @@ CREATE TABLE `xwords_cat` (
 	`weight` int(11) NOT NULL default '1',
 	PRIMARY KEY  (`categoryID`),
 	UNIQUE KEY categoryID (`categoryID`)
-) TYPE=MyISAM COMMENT='Xwords by aiba';	
+) ENGINE=MyISAM COMMENT='Xwords by aiba';	
 
 
 # --------------------------------------------------------
@@ -44,5 +44,5 @@ CREATE TABLE `xwords_ent` (
 	PRIMARY KEY  (`entryID`),
 	UNIQUE KEY entryID (`entryID`),
 	FULLTEXT KEY definition (`definition`)
-) TYPE=MyISAM COMMENT='Xwords by aiba';	
+) ENGINE=MyISAM COMMENT='Xwords by aiba';	
 

@@ -47,8 +47,10 @@ include_once "../include/gtickets.php" ;// GIJ
 $admintest = 0;
 
 if (is_object($xoopsUser)) {
-	$xoopsModule =& XoopsModule::getByDirname("system");
-	if ( !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
+	$module_handler =& xoops_gethandler('module');
+	$this_module =& $module_handler->getByDirname($admin_mydirname);
+	$mid = intval($this_module->getVar('mid'));
+	if ( !$xoopsUser->isAdmin($mid) ) {
 		redirect_header(XOOPS_URL.'/user.php',3,_NOPERM);
 		exit();
 	}

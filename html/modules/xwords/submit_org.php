@@ -49,14 +49,14 @@ switch ( $op )
 	$block = !empty( $_POST['block'] ) ? intval( $_POST['block'] ) : 0;
 	$notifypub = !empty( $_POST['notifypub'] ) ? intval( $_POST['notifypub'] ) : 0;
 
-//	if ( $xoopsModuleConfig['multicats'] == 1 )
-//		{
+	if ( $xoopsModuleConfig['multicats'] == 1 )
+		{
 		$categoryID = intval( $_POST['categoryID'] );
-//		} 
-//	else
-//		{
-//		$categoryID = 0;
-//		}
+		} 
+	else
+		{
+		$categoryID = 0;
+		}
 
 	if ( !$_POST['term'] || !$_POST['proc'] )
 		{
@@ -132,7 +132,6 @@ switch ( $op )
 
 	if ( $result )
 		{ 
-	
 		$username = $xoopsUser->getVar("uname", "E");
 		$result = $xoopsDB->query("select email from ".$xoopsDB->prefix("users")." where uname='$username'");
 		list($usermail) = $xoopsDB->fetchRow($result);
@@ -211,7 +210,6 @@ switch ( $op )
 			{
 			$legenddesc = constant("_MD_{$MYDIRNAME}_SUB_SNEWNAMEDESC2");
 			}
-	      $xoopsTpl -> assign ( 'entryID', $entryID ); //okino
 		}
 	else // therez no parameter, so were adding an entry
 		{

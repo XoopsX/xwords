@@ -104,7 +104,7 @@ while (list( $entryID, $categoryID, $term, $proc, $init, $definition, $ref, $url
 
 	for ($n=0; $n < count($mb_init); $n++)
 		{
-		if (ereg($mb_init[$n],$init) && $mb_linktext[$n] != constant("_MD_{$MYDIRNAME}_ALL_LINKTEXT"))
+		if (preg_match('/'.$mb_init[$n].'/',$init) && $mb_linktext[$n] != constant("_MD_{$MYDIRNAME}_ALL_LINKTEXT"))
 			{
 			$xoops_pagetitle .= $mb_linktext[$n].' ';
 

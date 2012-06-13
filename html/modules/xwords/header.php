@@ -53,4 +53,16 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 	}
 $myts = & XwordsTextSanitizer::getInstance();
 
+        // モジュールID  // added by naao
+        $module_handler =& xoops_gethandler('module');
+        $this_module =& $module_handler->getByDirname($mydirname);
+        $mid = $this_module->getVar('mid');
+ 
+        // モジュールconfig  // added by naao
+        $config_handler =& xoops_gethandler("config");
+        $mod_config = $config_handler->getConfigsByCat(0, $mid);
+        $mod_config['mybl_path'] = 'modules/'. $mod_config['com_agent']. '/blocks/blocks.php';
+        $xoopsTpl->assign("moduleConfig", $mod_config);
+ 
+
 ?>
