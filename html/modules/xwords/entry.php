@@ -15,6 +15,28 @@ include "./header.php";
 
 global $xoopsUser;
 
+// okino xpwiki‚©‚çxword‚ÉŽ©“®ƒŠƒ“ƒN
+if (!isset($_GET['entryID'])) {
+    if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) {
+    	$_temp = $_SERVER['QUERY_STRING'];
+    	if (strpos($_temp,'&') > 0) {
+        	$_arg = substr($_temp,0,strpos($_temp,'&'));
+        }
+        else {
+        	$_arg = $_temp;
+        }
+    } else if (isset($_SERVER['argv']) && ! empty($_SERVER['argv'])) {
+        $_arg = $_SERVER['argv'][0];
+    }
+ 
+    $_arg = rawurldecode($_arg);
+ 
+    $result = $xoopsDB->query( "SELECT `entryID` FROM ".$ent_table." WHERE `term`='".addslashes($_arg)."'" ) ;
+    if( $xoopsDB->getRowsNum( $result ) ) {
+        list( $_GET['entryID'] ) = $xoopsDB->fetchRow( $result ) ;
+    }
+}
+
 $entryID = !empty($_GET['entryID']) ? intval($_GET['entryID']) : 0;
 $catID = !empty($_GET['categoryID']) ? intval($_GET['categoryID']) : 0;
 $thisterm = array();

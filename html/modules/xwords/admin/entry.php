@@ -313,7 +313,8 @@ function entrySave ($entryID = '')
 		{
 		if ( $xoopsDB -> query( "UPDATE $ent_table SET term = '$term', proc = '$proc', categoryID = '$categoryID', init = '$init', definition = '$definition', ref = '$ref', url = '$url', uid = '$uid', submit = '$submit', datesub = '$datesub', html = '$html', smiley = '$smiley', xcodes = '$xcodes', breaks = '$breaks', block = '$block', offline = '$offline', notifypub = '$notifypub', request = '$request' WHERE entryID = '$entryID'" ) )
 			{
-			calculateTotals();
+			include_once( XOOPS_ROOT_PATH . '/modules/'.$xoopsModule->dirname().'/entries_write.php' );	//okino
+				calculateTotals();
 			redirect_header( "index.php", 1, constant("_AM_{$MYDIRNAME}_ENTRYMODIFIED") );
 			}
 		else
@@ -327,6 +328,7 @@ function entrySave ($entryID = '')
 		$uid = $xoopsUser -> uid();
 		if ( $xoopsDB -> query( "INSERT INTO $ent_table (entryID, categoryID, term, proc, init, definition, ref, url, uid, submit, datesub, html, smiley, xcodes, breaks, block, offline, notifypub, request ) VALUES ('', '$categoryID', '$term', '$proc', '$init', '$definition', '$ref', '$url', '$uid', '$submit', '$date', '$html', '$smiley', '$xcodes', '$breaks', '$block', '$offline', '$notifypub', '$request' )" ) )
 			{
+			include_once( XOOPS_ROOT_PATH . '/modules/'.$xoopsModule->dirname().'/entries_write.php' );	//okino
 		//posts count up
 			$xoopsDB->query( "UPDATE ".$xoopsDB->prefix('users')." SET posts=posts+1 WHERE uid='$uid'" ) ;
 			calculateTotals();

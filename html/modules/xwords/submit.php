@@ -132,7 +132,7 @@ switch ( $op )
 
 	if ( $result )
 		{ 
-	
+		include_once( XOOPS_ROOT_PATH . '/modules/'.$xoopsModule->dirname().'/entries_write.php' );	//okino
 		$username = $xoopsUser->getVar("uname", "E");
 		$result = $xoopsDB->query("select email from ".$xoopsDB->prefix("users")." where uname='$username'");
 		list($usermail) = $xoopsDB->fetchRow($result);
