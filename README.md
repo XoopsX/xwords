@@ -1,8 +1,10 @@
 # Xwords (えっくす・わーず)
+
 - オリジナル配布元：かんぴょう > http://www.kanpyo.net/
 - オリジナルバージョン： 0.46
 
 ## オリジナルからの変更内容
+
 - XOOPS Cube Legacyでのエラー対策
 - PHP5.3、MySWL5.5対応
 - d3コメント統合対応
@@ -11,19 +13,21 @@
 - xpWikiを使ったサイトワイドxpWikiレンダラーモードにて、xwordsタイトルへの自動リンクが可能です。
 html/modules/xpwiki/private/ini/pukiwiki.ini.php　に以下の記述を環境に合わせた内容で追加します。
 
-	//// xwordsへのオートリンク
-	$root->ext_autolinks[] = array(
-		'url'   => 'http://(your.domain)/uploads/xwords/entries.php' ,  // 空白（'')で自己xpWiki, 'ディレクトリ名' は自サイト内の別のxpWiki.
-		'urldat'=> 1 ,                // urlはオートリンクデータそのもの(0:No, 1:Yes)
-		'base'  => '' ,        // ベースページ名 (''[空白] ですべてのページ)
-		'len'   => 3 ,                // オートリンクを有効にする文字数
-		'enc'   => 'EUC-JP' ,        // 相手先の文字エンコーディング
-		'cache' => 10 ,                //キャッシュする分数 (最小値: 10分)
-		'title' => 'xwords:[KEY]' ,    // <a>タグのtitle属性 ([KEY] は対象語句に置換されます)
-		'pat'   => XOOPS_URL.'/modules/xwords/entry.php?[URL_ENCODE]' ,   // リンクパターン. ([URL_ENCODE], [WIKI_ENCODE], [EWORDS_ENCODE]が使用可能)
-	);
-
+````php
+    //xwordsへのオートリンク  
+    $root->ext_autolinks[] = array(
+        'url'   => 'http://(your.domain)/uploads/xwords/entries.php' ,  // 空白（'')で自己xpWiki, 'ディレクトリ名' は自サイト内の別のxpWiki.
+        'urldat'=> 1 ,                // urlはオートリンクデータそのもの(0:No, 1:Yes)
+        'base'  => '' ,        // ベースページ名 (''[空白] ですべてのページ)
+        'len'   => 3 ,                // オートリンクを有効にする文字数
+        'enc'   => 'EUC-JP' ,        // 相手先の文字エンコーディング
+        'cache' => 10 ,                //キャッシュする分数 (最小値: 10分)
+        'title' => 'xwords:[KEY]' ,    // ＜a＞タグのtitle属性 ([KEY] は対象語句に置換されます)
+        'pat'   => 'http://(your.domain)/modules/xwords/entry.php?[URL_ENCODE]' ,   // リンクパターン. ([URL_ENCODE], [WIKI_ENCODE], [EWORDS_ENCODE]が使用可能)
+    );
+````
 ## オリジナルサイトの説明転載
+
 マルチカテゴリー辞典「Wordbook」を日本語向けに特化させた改造モジュールです。
 私が不要と感じた機能はバッサリと削除し、今では日本語以外では使いようがないぐらいに
 なりました。「Wordbook」との互換性はありません。
