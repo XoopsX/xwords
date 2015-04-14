@@ -38,7 +38,7 @@ class XoopsGTicket {
 	{
 		// create a token
 		list( $usec , $sec ) = explode( " " , microtime() ) ;
-		$token = crypt( $salt . $usec . $_SERVER['PATH'] . $sec ) ;
+		$token = crypt( $salt . $usec . $_SERVER['PATH'] . $sec ,  XOOPS_DB_PREFIX ) ;
 		$this->_latest_token = $token ;
 
 		if( empty( $_SESSION['XOOPS_G_STUBS'] ) ) $_SESSION['XOOPS_G_STUBS'] = array() ;
