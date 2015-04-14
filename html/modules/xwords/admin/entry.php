@@ -32,7 +32,7 @@ function entryEdit( $entryID = '' )
 	global $xoopsUser,$xoopsConfig,$xoopsModuleConfig,$mydirname,$MYDIRNAME,$spaw_root,$cat_table,$ent_table,$xoopsGTicket; 
 	$xoopsDB =& Database::getInstance();
 	$xoopsModule = XoopsModule::getByDirname("$mydirname");
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$op = 'default';
 	if ( !empty( $_GET['op'] ) ) $op = trim($_GET['op']);
@@ -282,7 +282,7 @@ function entrySave ($entryID = '')
 
 	$xoopsDB =& Database::getInstance();
 	$xoopsModule = XoopsModule::getByDirname("$mydirname");
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$categoryID = !empty($_POST['categoryID']) ? intval($_POST['categoryID']) : '';
 	$uid = !empty($_POST['uid']) ? intval($_POST['uid']) : '';
@@ -346,7 +346,7 @@ function entryDelete($entryID = '')
 	{
 	global $cat_table,$ent_table,$xoopsConfig,$xoopsModuleConfig,$xoopsModule,$xoopsGTicket,$MYDIRNAME;
 	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$entryID = !empty( $_GET['entryID'] ) ? intval($_GET['entryID']) : '';
 
@@ -379,7 +379,7 @@ function entryDeletego($entryID = '')
 	}
 
 	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$ok = !empty($_POST['ok']) ? intval($_POST['ok']) : 0;
 	$term = !empty($_POST['term']) ? $myts -> htmlSpecialChars($_POST['term']) : "";

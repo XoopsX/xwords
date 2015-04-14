@@ -20,7 +20,7 @@ if( ! function_exists( 'b_sitemap_xwords_base' ) )
 		{
 	
 		$db =& Database::getInstance();
-		$myts =& MyTextSanitizer::getInstance();
+		(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 	
 		$result = $db->query("SELECT categoryID, name FROM ".$db->prefix("{$file}_cat")." order by weight");
 	

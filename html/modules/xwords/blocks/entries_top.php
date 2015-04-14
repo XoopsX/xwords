@@ -28,7 +28,7 @@ if( ! function_exists( 'xwords_b_entries_top_show_base' ) )
 		{
 		$xoopsDB =& Database::getInstance();
 		$ent_table = $xoopsDB -> prefix ("{$mydirname}_ent") ;
-		$myts = & MyTextSanitizer :: getInstance();
+		(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts = & MyTextSanitizer :: getInstance();
 
 		$hModule =& xoops_gethandler('module');
 		$hModConfig =& xoops_gethandler('config');

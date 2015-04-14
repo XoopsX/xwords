@@ -24,7 +24,7 @@ function categoryEdit( $categoryID = '' )
 	global $mydirname,$MYDIRNAME,$cat_table,$ent_table,$xoopsConfig,$xoopsGTicket; 
 	$xoopsDB =& Database::getInstance();
 	$xoopsModule = XoopsModule::getByDirname("$mydirname");
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$categoryID = !empty( $_GET['categoryID'] ) ? intval($_GET['categoryID']) : '';
 	// If there is a parameter, and the id exists, retrieve data: were editing a column
@@ -111,7 +111,7 @@ function categoryDelete($categoryID = '')
 	{
 	global $cat_table,$ent_table,$xoopsConfig,$xoopsModuleConfig,$xoopsModule,$xoopsGTicket,$MYDIRNAME;
 	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$result = $xoopsDB -> query( "SELECT categoryID, name FROM $cat_table WHERE categoryID = '$categoryID'" );
 
@@ -143,7 +143,7 @@ function categoryDeletego($categoryID = '')
 	}
 
 	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$ok = !empty($_POST['ok']) ? intval($_POST['ok']) : 0;
 	$name = !empty($_POST['name']) ? $myts -> htmlSpecialChars($_POST['name']) : "";
@@ -184,7 +184,7 @@ function categorySave ($categoryID = '')
 	}
 
 	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$weight = !empty($_POST['weight'] ) ? intval($_POST['weight']) : 0;
 	$name = !empty($_POST['name'] ) ? $myts->addSlashes($_POST['name']) : '';

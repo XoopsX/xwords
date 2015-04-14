@@ -91,7 +91,7 @@ function catlinksArray ()
 		include_once( XOOPS_ROOT_PATH . "/modules/$mydirname/class/xwords.textsanitizer.php" ) ;
 		}
 	$myts = & XwordsTextSanitizer::getInstance();
-//	$myts =& MyTextSanitizer::getInstance();
+//	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$block0 = array();
 	$catlinks = array();
@@ -273,7 +273,7 @@ function NewEntriesArray ($categoryID=0)
 	$mydirname = basename( dirname( dirname( __FILE__ ) ) ) ;
 	$xoopsDB =& Database::getInstance();
 	$ent_table = $xoopsDB -> prefix ("{$mydirname}_ent") ;
-	$myts = & MyTextSanitizer :: getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts = & MyTextSanitizer :: getInstance();
 	$cID = $categoryID ? "categoryID = '$categoryID' AND" : '';
 	$block1 = array();
 
@@ -301,7 +301,7 @@ function PopEntriesArray ($categoryID=0)
 	$mydirname = basename( dirname( dirname( __FILE__ ) ) ) ;
 	$xoopsDB =& Database::getInstance();
 	$ent_table = $xoopsDB -> prefix ("{$mydirname}_ent") ;
-	$myts = & MyTextSanitizer :: getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts = & MyTextSanitizer :: getInstance();
 	$cID = $categoryID ? "categoryID = '$categoryID' AND" : '';
 	$block2 = array();
 
@@ -356,7 +356,7 @@ function showSearchForm($query='',$type='',$catID='',$andor='')
 	$cat_table = $xoopsDB -> prefix ("{$mydirname}_cat") ;
 	$ent_table = $xoopsDB -> prefix ("{$mydirname}_ent") ;
 	$xoopsModule = XoopsModule::getByDirname("$mydirname");
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$query = $myts->htmlSpecialChars($query);
 
@@ -436,7 +436,7 @@ function showSearchForm($query='',$type='',$catID='',$andor='')
 
 function getHTMLHighlight($needle, $haystack, $hlS, $hlE, $html)
 	{
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 	$count = count( $needle );
 	$parts = explode(">", $haystack);
 	foreach($parts as $key=>$part)

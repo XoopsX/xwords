@@ -31,7 +31,7 @@ function editentry( $entryID = '' )
 	{
 	global $xoopsUser,$xoopsConfig,$xoopsModuleConfig,$xoopsModule,$cat_table,$ent_table,$xoopsGTicket,$spaw_root,$MYDIRNAME; 
 	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$op = 'default';
 	if ( !empty( $_GET['op'] ) ) $op = trim($_GET['op']);
@@ -175,7 +175,7 @@ function entryDelete($entryID = '')
 	{
 	global $cat_table,$ent_table,$xoopsConfig,$xoopsModuleConfig,$xoopsModule,$xoopsGTicket,$MYDIRNAME; 
 	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$entryID = !empty( $_GET['entryID'] ) ? intval($_GET['entryID']) : '';
 	$result = $xoopsDB -> query( "SELECT entryID, term FROM $ent_table WHERE entryID = '$entryID'" );
@@ -209,7 +209,7 @@ function entryDeletego($entryID = '')
 	}
 
 	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$confirm = !empty($_POST['confirm']) ? intval($_POST['confirm']) : 0;
 	$term = !empty($_POST['term']) ? $myts -> htmlSpecialChars($_POST['term']) : "";
@@ -243,7 +243,7 @@ function entrySave($entryID = '')
 	}
 
 	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 
 	$entryID = !empty($_POST['entryID']) ? intval($_POST['entryID']) : 0;
@@ -286,7 +286,7 @@ function entryz()
 	include_once( XOOPS_ROOT_PATH . '/class/pagenav.php' );
 	global $cat_table,$ent_table,$xoopsConfig,$xoopsModuleConfig,$xoopsModule,$MYDIRNAME; 
 	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$startsub = !empty( $_GET['startsub'] ) ? intval( $_GET['startsub'] ) : 0;
 	$entryID = !empty( $_GET['entryID'] ) ? intval($_GET['entryID']) : 0;

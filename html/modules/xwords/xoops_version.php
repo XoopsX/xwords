@@ -86,7 +86,7 @@ $i++;
 if ( isset($xoopsModuleConfig['catsinmenu']) && $xoopsModuleConfig['catsinmenu'] && $xoopsModuleConfig['multicats'])
 	{
 	$xoopsDB =& Database::getInstance();
-	$myts = & MyTextSanitizer ::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts = & MyTextSanitizer ::getInstance();
 	$cat_table = $xoopsDB->prefix( "{$mydirname}_cat" );
 	$sql = $xoopsDB->query("SELECT categoryID, name FROM $cat_table ORDER BY weight ASC");
 	while ( list( $categoryID, $name ) = $xoopsDB->fetchRow( $sql ) )
