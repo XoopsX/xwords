@@ -61,7 +61,7 @@ $myts = & XwordsTextSanitizer::getInstance();
         // モジュールconfig  // added by naao
         $config_handler =& xoops_gethandler("config");
         $mod_config = $config_handler->getConfigsByCat(0, $mid);
-        $mod_config['mybl_path'] = 'modules/'. $mod_config['com_agent']. '/blocks/blocks.php';
+        $mod_config['mybl_path'] = 'modules/'. $mod_config['comment_dirname']. '/blocks/blocks.php';
         $xoopsTpl->assign("moduleConfig", $mod_config);
  
 
