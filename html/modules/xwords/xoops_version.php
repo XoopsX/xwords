@@ -17,7 +17,7 @@ $MYDIRNAME = strtoupper($mydirname);
 
 $modversion['name'] = $MYDIRNAME;
 $modversion['version'] = 0.47;
-$modversion['detailed_version'] = "0.47.2";
+$modversion['detailed_version'] = "0.47.3";
 $modversion['description'] = constant("_MI_{$MYDIRNAME}_MD_DESC");
 $modversion['author'] = "Aiba<br />(http://www.kanpyo.net/)";
 $modversion['credits'] = "Original: Catzwolf<br />XOOPS Project";
