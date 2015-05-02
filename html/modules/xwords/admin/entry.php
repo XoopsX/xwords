@@ -31,7 +31,8 @@ function entryEdit( $entryID = '' )
 	{
 	global $xoopsUser,$xoopsConfig,$xoopsModuleConfig,$mydirname,$MYDIRNAME,$spaw_root,$cat_table,$ent_table,$xoopsGTicket; 
 	$xoopsDB =& Database::getInstance();
-	$xoopsModule = XoopsModule::getByDirname("$mydirname");
+	$module_handler =& xoops_gethandler('module');
+	$xoopsModule =& $module_handler->getByDirname($mydirname);
 	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$op = 'default';
@@ -281,7 +282,8 @@ function entrySave ($entryID = '')
 	}
 
 	$xoopsDB =& Database::getInstance();
-	$xoopsModule = XoopsModule::getByDirname("$mydirname");
+	$module_handler =& xoops_gethandler('module');
+	$xoopsModule =& $module_handler->getByDirname($mydirname);
 	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$categoryID = !empty($_POST['categoryID']) ? intval($_POST['categoryID']) : '';

@@ -44,7 +44,7 @@ if( ! function_exists( 'xwords_b_entries_random_show_base' ) )
 			{
 			include_once( XOOPS_ROOT_PATH . "/modules/$mydirname/class/xwords.textsanitizer.php" ) ;
 			}
-		$myts = & XwordsTextSanitizer::getInstance();
+		$myts = & XwordsTextSanitizer::sGetInstance();
 
 		$block = array();
 		$rndlength = isset($xwConfig['rndlength']) ? intval($xwConfig['rndlength']) : 100 ;

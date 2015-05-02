@@ -20,7 +20,8 @@ include_once ( XOOPS_ROOT_PATH."/class/xoopstree.php" );
 include_once ( XOOPS_ROOT_PATH."/class/xoopslists.php" );
 include_once ( XOOPS_ROOT_PATH."/class/xoopsformloader.php" );
 
-$xoopsModule = XoopsModule::getByDirname("$mydirname");
+$module_handler =& xoops_gethandler('module');
+$xoopsModule =& $module_handler->getByDirname($mydirname);
 $cat_table = $xoopsDB -> prefix ("{$mydirname}_cat") ;
 $ent_table = $xoopsDB -> prefix ("{$mydirname}_ent") ;
 
@@ -37,6 +38,6 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 	{
 	include_once( XOOPS_ROOT_PATH . "/modules/$mydirname/class/xwords.textsanitizer.php" ) ;
 	}
-$myts = & XwordsTextSanitizer::getInstance();
+$myts = & XwordsTextSanitizer::sGetInstance();
 
 ?>

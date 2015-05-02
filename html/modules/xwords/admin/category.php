@@ -23,7 +23,8 @@ function categoryEdit( $categoryID = '' )
 	{
 	global $mydirname,$MYDIRNAME,$cat_table,$ent_table,$xoopsConfig,$xoopsGTicket; 
 	$xoopsDB =& Database::getInstance();
-	$xoopsModule = XoopsModule::getByDirname("$mydirname");
+	$module_handler =& xoops_gethandler('module');
+	$xoopsModule =& $module_handler->getByDirname($mydirname);
 	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$categoryID = !empty( $_GET['categoryID'] ) ? intval($_GET['categoryID']) : '';

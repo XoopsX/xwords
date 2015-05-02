@@ -113,6 +113,10 @@ if ($admintest != 0) {
 }
 
 if (false != $error) {
+	if (defined('XOOPS_CUBE_LEGACY') && !empty($_GET['mod'])) {
+		header('Location: '.XOOPS_MODULE_URL.'/legacy/admin/index.php?action=PreferenceEdit&confmod_id='.(int)$_GET['mod']);
+		exit;
+	}
 	xoops_cp_header();
 	echo "<h4>System Configuration</h4>";
 	echo '<table class="outer" cellpadding="4" cellspacing="1">';

@@ -90,7 +90,7 @@ function catlinksArray ()
 		{
 		include_once( XOOPS_ROOT_PATH . "/modules/$mydirname/class/xwords.textsanitizer.php" ) ;
 		}
-	$myts = & XwordsTextSanitizer::getInstance();
+	$myts = & XwordsTextSanitizer::sGetInstance();
 //	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$block0 = array();
@@ -102,7 +102,7 @@ function catlinksArray ()
 		$catlinks['id'] = $catID;
 		$catlinks['total'] = intval($total);
 		$catlinks['linktext'] = $myts -> makeTboxData4Show( $name );
-		$catlinks['desc'] = $myts -> displayTarea( $description,1,1,1,1,1,1);
+		$catlinks['desc'] = $myts -> displayTarea( $description,1,1,1,1,1);
 //		$catlinks['desc'] = $myts -> makeTboxData4Show( $description );
 
 		$block0['categories'][] = $catlinks;
@@ -330,7 +330,9 @@ function serviceLinks ( $variable ,$uid )
 	$mydirname = basename( dirname( dirname( __FILE__ ) ) ) ;
 	$MYDIRNAME = strtoupper($mydirname);
 	$xoopsDB =& Database::getInstance();
-	$xoopsModule = XoopsModule::getByDirname("$mydirname");
+	$module_handler =& xoops_gethandler('module');
+	$xoopsModule =& $module_handler->getByDirname($mydirname);
+
 	// Functional links
 	$srvlinks = "";
 	if ( is_object($xoopsUser) ) 
@@ -355,7 +357,8 @@ function showSearchForm($query='',$type='',$catID='',$andor='')
 	$xoopsDB =& Database::getInstance();
 	$cat_table = $xoopsDB -> prefix ("{$mydirname}_cat") ;
 	$ent_table = $xoopsDB -> prefix ("{$mydirname}_ent") ;
-	$xoopsModule = XoopsModule::getByDirname("$mydirname");
+	$module_handler =& xoops_gethandler('module');
+	$xoopsModule =& $module_handler->getByDirname($mydirname);
 	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	$query = $myts->htmlSpecialChars($query);
@@ -469,7 +472,8 @@ function getHTMLHighlight($needle, $haystack, $hlS, $hlE, $html)
 function adminMenu ( $currentoption = 0, $breadcrumb = '' )
 	{
 	global $xoopsConfig, $xoopsModuleConfig,$mydirname;
-	$xoopsModule = XoopsModule::getByDirname("$mydirname");
+	$module_handler =& xoops_gethandler('module');
+	$xoopsModule =& $module_handler->getByDirname($mydirname);
 
 	$tblColors = Array();
 	$tblColors[0]=$tblColors[1]=$tblColors[2]=$tblColors[3]=$tblColors[4]=$tblColors[5]=$tblColors[6]=$tblColors[7]=$tblColors[8]='#DDE';

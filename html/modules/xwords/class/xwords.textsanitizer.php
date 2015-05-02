@@ -57,7 +57,7 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 		* @static
 		* @staticvar   object
 		*/
-		function &getInstance()
+		public static function &sGetInstance()
 			{
 			static $instance;
 			if (!isset($instance))
@@ -66,6 +66,10 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 				}
 			return $instance;
 			}
+		function &getInstance() {
+			$instance =& self::sGetInstance();
+			return $instance;
+		}
 
 		/**
 		 * Filters textarea form data in DB for display
@@ -80,8 +84,14 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 		 * @param   string  $id
 		 * @return  string
 		 **/
-		function &displayTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1, $mod_dir = "", $id = 0 )
+		function &displayTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1 )
 			{
+			// extra params $mod_dir = "", $id = 0
+			$mod_dir = "";
+			$id = 0;
+			$args = func_get_args();
+			if (isset($args[6])) $mod_dir = $args[6];
+			if (isset($args[7])) $id = $args[7];
 			if ($mod_dir)
 				{
             			$text = $this->prepareXcode( $text ); //okino
@@ -110,8 +120,14 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 		 * @param   bool    $br     convert linebreaks?
 		 * @return  string
 		 **/
-		function previewTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1, $mod_dir = "", $id = 0 )
+		function &previewTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1 )
 			{
+			// extra params $mod_dir = "", $id = 0
+			$mod_dir = "";
+			$id = 0;
+			$args = func_get_args();
+			if (isset($args[6])) $mod_dir = $args[6];
+			if (isset($args[7])) $id = $args[7];
 			if ($mod_dir)
 				{
             			$text = $this->prepareXcode( $text ); //okino
@@ -221,7 +237,7 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 				$parts = array();
 				$text2 = array();
 				$text3 = "";
-				list($spatternf,$spatterne) = explode(",",$this->getModuleConfig("spattern"));
+				list($spatternf,$spatterne) = array_pad(explode(",",$this->getModuleConfig("spattern")), 2, '');
 				$parts = explode(">", $text);
 				foreach($parts as $key=>$part)
 					{
@@ -316,7 +332,7 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 			$q_arr1 = array();
 			$q_arr2 = array();
 			$queryarray = array();
-			list($spatternf,$spatterne) = explode(",",$this->getModuleConfig("spattern"));
+			list($spatternf,$spatterne) = array_pad(explode(",",$this->getModuleConfig("spattern")), 2, '');
 
 			foreach ($modulelist as $mid=>$mod)
 				{
@@ -350,6 +366,8 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 //				preg_match_all('/\xA1[\xAE\xC6\xC8\xCC\xCE\xD0\xD2\xD4\xD6\xD8\xDA](.+?)\xA1[\xAD\xC7\xC9\xCD\xCF\xD1\xD3\xD5\xD7\xD9\xDB]/',$text,$q_arr2);
 				preg_match_all("/$spatternf(.+?)$spatterne/",$text,$q_arr2);
 				}
+			if (!is_array($q_arr1) || !isset($q_arr1[2])) $q_arr1 = array_pad(array(), 3, array());
+			if (!is_array($q_arr2) || !isset($q_arr2[1])) $q_arr2 = array_pad(array(), 2, array());
 			$q_arr = array_unique(array_merge($q_arr1[2],$q_arr2[1]));
 			sort($q_arr);
 			reset($q_arr);
@@ -389,7 +407,7 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 			$module_handler =& xoops_gethandler('module');
 			$criteria = new CriteriaCompo(new Criteria('hassearch', 1));
 			$criteria->add(new Criteria('isactive', 1));
-			$mids =& array_keys($module_handler->getList($criteria));
+			$mids = array_keys($module_handler->getList($criteria));
 
 			#### plugin load ####
 			foreach ($mids as $mid)

@@ -43,7 +43,8 @@ else
 
 include_once( XOOPS_ROOT_PATH . "/modules/$mydirname/include/functions.php" );
 
-$xoopsModule = XoopsModule::getByDirname("$mydirname");
+$module_handler =& xoops_gethandler('module');
+$xoopsModule =& $module_handler->getByDirname($mydirname);
 $cat_table = $xoopsDB -> prefix ("{$mydirname}_cat") ;
 $ent_table = $xoopsDB -> prefix ("{$mydirname}_ent") ;
 
@@ -51,18 +52,16 @@ if( ! class_exists( 'XwordsTextSanitizer' ) )
 	{
 	include_once( XOOPS_ROOT_PATH . "/modules/$mydirname/class/xwords.textsanitizer.php" ) ;
 	}
-$myts = & XwordsTextSanitizer::getInstance();
+$myts = & XwordsTextSanitizer::sGetInstance();
 
-        // モジュールID  // added by naao
-        $module_handler =& xoops_gethandler('module');
-        $this_module =& $module_handler->getByDirname($mydirname);
-        $mid = $this_module->getVar('mid');
- 
-        // モジュールconfig  // added by naao
-        $config_handler =& xoops_gethandler("config");
-        $mod_config = $config_handler->getConfigsByCat(0, $mid);
-        $mod_config['mybl_path'] = 'modules/'. $mod_config['comment_dirname']. '/blocks/blocks.php';
-        $xoopsTpl->assign("moduleConfig", $mod_config);
+// モジュールID  // added by naao
+$mid = $xoopsModule->getVar('mid');
+
+// モジュールconfig  // added by naao
+$config_handler =& xoops_gethandler("config");
+$mod_config = $config_handler->getConfigsByCat(0, $mid);
+$mod_config['mybl_path'] = 'modules/'. $mod_config['comment_dirname']. '/blocks/blocks.php';
+$xoopsTpl->assign("moduleConfig", $mod_config);
  
 
 ?>

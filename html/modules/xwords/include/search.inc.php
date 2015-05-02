@@ -27,7 +27,7 @@ if( ! function_exists( 'xwords_search_base' ) ) {
 function xwords_search_base( $mydirname, $queryarray, $andor, $limit, $offset, $userid )
 	{
 	include_once XOOPS_ROOT_PATH."/modules/$mydirname/class/xwords.textsanitizer.php" ;
-	$myts =& XwordsTextSanitizer::getInstance();
+	$myts =& XwordsTextSanitizer::sGetInstance();
 	$xoopsDB =& Database::getInstance();
 	$xoopsModule = XoopsModule::getByDirname("{$mydirname}");
 
