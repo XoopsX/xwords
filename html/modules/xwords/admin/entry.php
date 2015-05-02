@@ -262,7 +262,8 @@ function entryEdit( $entryID = '' )
 		$button_tray->addElement( $butt_cancel );
 		}
 
-	$button_tray->addElement( $xoopsGTicket->getTicketXoopsForm( __LINE__ ) );//GIJ
+	$gticket = $xoopsGTicket->getTicketXoopsForm( __LINE__ );
+	$button_tray->addElement( $gticket );//GIJ
 	$sform -> addElement( $button_tray );
 	$sform -> display();
 
