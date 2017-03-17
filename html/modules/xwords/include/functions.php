@@ -148,7 +148,7 @@ function getInitial($term = '',$proc = '')
 		}
 	elseif (!preg_match('/^[[:blank:]]|[[:cntrl:]]/',$term) && $term)
 		{
-		$init_t = substr($term, 0, 2);
+		$init_t = mb_substr($term, 0, 1);
 		}
 	$init_t = $xwConfig['letterformat'] == "letter_format11.php" ? "":$init_t;
 
@@ -158,7 +158,7 @@ function getInitial($term = '',$proc = '')
 		}
 	elseif (!preg_match('/^[[:blank:]]|[[:cntrl:]]/',$proc) && $proc)
 		{
-		$init_p = substr($proc, 0, 2);
+		$init_p = mb_substr($proc, 0, 1);
 		}
 
 	return addslashes($init_p.$init_t);
