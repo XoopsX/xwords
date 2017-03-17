@@ -29,6 +29,13 @@ $MYDIRNAME = strtoupper($mydirname);
 
 include "../../mainfile.php";
 
+// For XCL >= 2.2.1.1 (clear cache of modinfo)
+if (defined('LEGACY_BASE_VERSION') && version_compare(LEGACY_BASE_VERSION, '2.2.1.1', '>=')) {
+	$module_handler = xoops_gethandler('module');
+	$thisModule =& $module_handler->getByDirname($mydirname);
+	$thisModule->modinfo = null;
+}
+
 global $xoopsConfig, $xoopsModuleConfig;
 
 // include the default language file for the module interface
